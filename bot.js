@@ -73,32 +73,44 @@ message.channel.send(`Successfully Unmuted ${mnt} :+1:`)
 });
 
 
-﻿client.on("message", message => {
-if(message.content.startsWith(prefix + `contact`)){
-if(message.author.bot || message.channel.type == 'dm') return;
-let args = message.content.split(" ").slice(1);
-let msg = args.join(' ');
-let dev = client.users.get(""); //Your id
-if(!args) return message.reply("يجب كتابة الرسالة");
-dev.send(`• | User: **${message.author.tag}**\n\n• | Message: **${msg}**`).then(() =>{
-message.channel.send(`Your message has been successfully delivered to the bot owner`)
-}).catch(console.error);
-}
-});
 
-
-
-client.on('guildCreate', guild => {
-  let support = client.guilds.get('576704119058726912') // حط هنا ايدي سيرفر السبورت
-  if(support === undefined) return
-  let role = support.roles.find(r => r.name == 'Member') // بدلها بأسم الرتبة يلي تبيها للمستخدمين
-  let member = support.members.get(guild.owner.user.id) 
-  if(member) {
-    member.addRole(role)
-  } else {
-    console.log(`this user not in support server`)
+const prefix = "="
+bot.on('guildMemberAdd', m => {
+  let enabled = db.get(`autorole.${m.guild.id}.enabled`)
+  if(enabled === 'off') return
+  let roleID = db.get(`autorole.${m.guild.id}.role`)
+  if(roleID === null) return
+  let role = m.guild.roles.get(roleID)
+  if(role === undefined) return
+  m.addRole(role,'auto role')
+})
+bot.on('message', msg => {
+  let params = msg.content.slice(prefix.length).trim().split(/ +/g);
+  if(msg.author.bot) return;
+  if(msg.content.startsWith(prefix + "autorole")) {
+    if(params[1].toLowerCase() === 'set') {
+      if(!params[2]) return msg.channel.send(`**اكتب اسم الرتبة او منشنها**`)
+    let role = msg.mentions.roles.first() || msg.guild.roles.find(r => r.name.toLowerCase().startsWith(params[2].toLowerCase()))
+    if(role === undefined) return msg.channel.send(`**لم استطع العثور على هذه الرتبة**`)
+    db.set(`autorole.${msg.guild.id}.role`, role.id)
+    msg.channel.send(`تم اعداد الاوتو رول للرتبة ${role}`)
+  }
+    if(params[1].toLowerCase() === 'off') {
+      let enabled = db.get(`autorole.${msg.guild.id}.enabled`)
+      if(enabled === 'off') return msg.channel.send(`**الاوتو رول موقفة بالفعل**`)
+      db.set(`autorole.${msg.guild.id}.enabled`, 'off')
+      msg.channel.send(`**تم ايقاف الاوتو رول بنجاح**`)
+    }
+    if(params[1].toLowerCase() === 'on') {
+      let enabled = db.get(`autorole.${msg.guild.id}.enabled`)
+      if(enabled === 'on') return msg.channel.send(`**الاوتو رول مفعلة بالفعل**`)
+ 
+      db.set(`autorole.${msg.guild.id}.enabled`, 'on')
+      msg.channel.send(`**تم تشغيل الاوتو رول بنجاح**`)
+    }
   }
 })
+
 
 
 
