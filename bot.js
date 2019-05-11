@@ -183,40 +183,6 @@ client.on("message", (message) => {
 
 
 
-﻿var Enmap = require('enmap');
-client.antibots = new Enmap({name: "antibot"});
-var antibots = client.antibots;
-var julian = client;
-julian.on("message", codes => {
-var prefix = "-";
-if(codes.content.startsWith(prefix + "antibots on")){
-if(codes.author.bot || !codes.channel.guild || codes.author.id != codes.guild.ownerID) return;
-antibots.set(`${codes.guild.id}`, {
-onoff: 'On'
-});
- 
- 
-codes.channel.send("AntiBots Join Is On");
-}
-if(codes.content.startsWith(prefix + "antibots off")){
-if(codes.author.bot || !codes.channel.guild || codes.author.id != codes.guild.ownerID) return;
-antibots.set(`${codes.guild.id}`, {
-onoff: "Off"
-});
-codes.channel.send("AntiBots Join Is Off");
-}
-});
- 
-julian.on("guildMemberAdd", member => {
-if(!antibots.get(`${member.guild.id}`)) { antibots.set(`${member.guild.id}`, {
-onoff: "Off"
-});
-}
-if(antibots.get(`${member.guild.id}`).onoff == "Off") return;
-if(member.user.bot) return member.kick()
-});
-
-
 
 client.on("guildMemberAdd", member => {
   client.channels.find('id', '576778852009902101').send(`**مرحبابك نتمني لك الأستمتاع في سيرفرنا : [ ${member} ]**`)
