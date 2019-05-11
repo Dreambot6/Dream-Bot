@@ -86,8 +86,7 @@ message.channel.send(`Your message has been successfully delivered to the bot ow
 }
 });
 
-const Discord = require('discord.js')
-const client = new Discord.Client()
+
 
 client.on('guildCreate', guild => {
   let support = client.guilds.get('576704119058726912') // حط هنا ايدي سيرفر السبورت
