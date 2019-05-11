@@ -192,7 +192,7 @@ client.on("guildMemberAdd", member => {
 
 
  
-let vipKeys = JSON.parse(fs.readFileSync("./vipKeys.json", "utf8"));
+
 client.on("message", msg=>{
 let id = "491884648276819968"; // ايديك
 let role = "VIP"; // اسم رتبة الفيب
