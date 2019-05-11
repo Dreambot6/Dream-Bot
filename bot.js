@@ -73,7 +73,7 @@ message.channel.send(`Successfully Unmuted ${mnt} :+1:`)
 });
 
 
-
+const db = require('quick.db')
 const prefix = "="
 bot.on('guildMemberAdd', m => {
   let enabled = db.get(`autorole.${m.guild.id}.enabled`)
