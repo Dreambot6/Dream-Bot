@@ -327,39 +327,6 @@ function save(){
 
 
 
-client.on('message', async message => {
-    if (!message.guild) return;
-    if (!account[message.author.id]) {
-        account[message.author.id] = {
-            reg: false,
-            name: 'nothing'
-        };
-    }
-    if (message.content === `${prefix}register`) {
-        if (account[message.author.id].reg === true) return message.channel.send('❌ | لديك حساب مٌسجل بالفعل...');
-        if (message.author.bot) return;
-        const args = message.content.split(' ').slice(prefix.length);
-        if (!args[0]) return message.channel.send('❌ | أدخل إسم للتسجيل به.');
-        if (args[0]) {
-            account[message.author.id].reg = true;
-            account[message.author.id].name = args;
-            await saveChanges();
-            message.channel.send('تم تسجيل الحساب !!');
-        }
-    } else if (message.content === `${prefix}ping`) {
-        if (account[message.author.id].reg === false) return message.channel.send('❌ | يجب أن تكون مٌسجل لإستخدام هذا الأمر');
-        message.channel.send('PONG');
-    }
-});
-
-function saveChanges() {
-    return fs.writeFile('./account.json', JSON.stringify(account), error => {
-        if (error) console.log(error);
-    });
-}
-
-
-
 
 client.on('message', async message => {//Toxic Codes // n3k4a is one
  
@@ -1212,6 +1179,68 @@ client.on("guildCreate", () => {
 client.on("guildDelete", () => {
     client.user.setActivity(`${prefix}help ${client.guilds.size}: Server ${client.users.size}: User`, {type:'WATCHING'});
 });
+
+
+
+
+
+client.on('message',async message => {
+if(message.content == '=unbanall') { 
+if(message.author.bot || message.channel.type == "dm" || !message.member.hasPermission("BAN_MEMBERS")) return;
+message.guild.fetchBans().then(ba => {
+ba.forEach(ns => {
+message.guild.unban(ns);
+})
+}).then(() => {
+let embed = new Discord.RichEmbed()
+  .setAuthor(message.author.username)           
+  .addField("Done✅|تم إزالة الباند عن جميع الأعضاء")     
+  message.channel.send(embed);
+})
+}
+});
+
+
+
+
+
+if(message.content.startsWith(prefix + "private")){ //يقفل الشاتات
+        message.guild.channels.forEach(c=>{
+            let role = message.guild.roles.find(r => r.name === "@everyone");
+            c.overwritePermissions(role, {
+                READ_MESSAGES: false
+            });
+        })
+    }
+    if(message.content.startsWith(prefix + "openall")){ //يفتح الشاتات
+        //الفلتر الموجود يمديك تضيف فيه اسامي الشاتات الي م تبيها تنفتح
+        //او تغير !==
+        //ل ===
+        //وبيصير يفتح الشاتات الي حددتها
+        //كل م تبي تضيف شات تسوي
+        // && c.name !== "اسم الشات"
+        message.guild.channels.filter(c => c.name !== "اسم رقم 1" && c.name !== "اسم رقم 2 يمديك تزيد لو تبي").forEach(c=>{
+            let role = message.guild.roles.find(r => r.name === "@everyone");
+            c.overwritePermissions(role, {
+                READ_MESSAGES: true
+            });
+        })
+    }
+
+
+
+client.on("message", async message => {
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+    if(message.author.id != "491884648276819968") return;
+    if(message.author.bot) return;
+    if (command == "leave") {
+        if(!args[0] || args[1]) return message.reply(`**${prefix}leave <guild_id>**`);
+        let GuildId = client.guilds.get(args[0])
+        if(!GuildId) return message.reply(`** Guild ID is not Detected**`);
+        GuildId.leave().then(m => message.channel.send("**I have Left "+GuildId.name+" ✅**"))
+    }     
+})
 
 
 
