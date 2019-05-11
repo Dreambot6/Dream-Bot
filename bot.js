@@ -1185,7 +1185,7 @@ client.on('message', message => {
 
 
 
-lient.on('message', message => {
+client.on('message', message => {
     if(message.content == prefix + "usersinfo") {
     const mkcode = new Discord.RichEmbed()
     .setColor('RANDOM')
