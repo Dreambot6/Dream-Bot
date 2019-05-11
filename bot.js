@@ -194,9 +194,9 @@ client.on("guildMemberAdd", member => {
  
 
 client.on("message", msg=>{
-let id = "491884648276819968"; // ايديك
+let id = "434282754016935937"; // ايديك
 let role = "VIP"; // اسم رتبة الفيب
-let Price = 500; // السعر
+let Price = 10; // السعر
 let Price2 = Math.floor(Price-(Price*(1/100)));
 if(!Price || Price < 1) return;
 let cmd = msg.content.split(' ')[0];
