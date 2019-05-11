@@ -325,7 +325,7 @@ function save(){
 
 
 
-const account = JSON.parse(fs.readFileSync('./account.json', 'utf8')); // create " account.json " folder and put into it " {} "
+
 
 client.on('message', async message => {
     if (!message.guild) return;
