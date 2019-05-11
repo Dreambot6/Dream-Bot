@@ -360,7 +360,7 @@ function saveChanges() {
 
 
 
-let points = JSON.parse(fs.readFileSync('./points.json' , 'utf8')); //Toxic Codes // n3k4a is one
+
 if(!points.json) points.json = {}
 client.on('message', async message => {//Toxic Codes // n3k4a is one
  
