@@ -157,7 +157,7 @@ client.on("message", (message) => {
     }
  
  
-  if (message.content.startsWith("?close")) {
+  if (message.content.startsWith("=close")) {
         if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`You can't use the close command outside of a ticket channel.`);
  
        message.channel.send(`هل انت متأكد من اقفالك للتذكرة اذا متأكد اكتب=confirm`)
@@ -324,8 +324,7 @@ function save(){
 
 
 
-const fs = require('fs'); // npm i fs
-const prefix = '='; // you can change this
+
 const account = JSON.parse(fs.readFileSync('./account.json', 'utf8')); // create " account.json " folder and put into it " {} "
 
 client.on('message', async message => {
