@@ -72,44 +72,6 @@ message.channel.send(`Successfully Unmuted ${mnt} :+1:`)
 }
 });
 
-
-const db = require('quick.db')
-bot.on('guildMemberAdd', m => {
-  let enabled = db.get(`autorole.${m.guild.id}.enabled`)
-  if(enabled === 'off') return
-  let roleID = db.get(`autorole.${m.guild.id}.role`)
-  if(roleID === null) return
-  let role = m.guild.roles.get(roleID)
-  if(role === undefined) return
-  m.addRole(role,'auto role')
-})
-bot.on('message', msg => {
-  let params = msg.content.slice(prefix.length).trim().split(/ +/g);
-  if(msg.author.bot) return;
-  if(msg.content.startsWith(prefix + "autorole")) {
-    if(params[1].toLowerCase() === 'set') {
-      if(!params[2]) return msg.channel.send(`**اكتب اسم الرتبة او منشنها**`)
-    let role = msg.mentions.roles.first() || msg.guild.roles.find(r => r.name.toLowerCase().startsWith(params[2].toLowerCase()))
-    if(role === undefined) return msg.channel.send(`**لم استطع العثور على هذه الرتبة**`)
-    db.set(`autorole.${msg.guild.id}.role`, role.id)
-    msg.channel.send(`تم اعداد الاوتو رول للرتبة ${role}`)
-  }
-    if(params[1].toLowerCase() === 'off') {
-      let enabled = db.get(`autorole.${msg.guild.id}.enabled`)
-      if(enabled === 'off') return msg.channel.send(`**الاوتو رول موقفة بالفعل**`)
-      db.set(`autorole.${msg.guild.id}.enabled`, 'off')
-      msg.channel.send(`**تم ايقاف الاوتو رول بنجاح**`)
-    }
-    if(params[1].toLowerCase() === 'on') {
-      let enabled = db.get(`autorole.${msg.guild.id}.enabled`)
-      if(enabled === 'on') return msg.channel.send(`**الاوتو رول مفعلة بالفعل**`)
- 
-      db.set(`autorole.${msg.guild.id}.enabled`, 'on')
-      msg.channel.send(`**تم تشغيل الاوتو رول بنجاح**`)
-    }
-  }
-})
-
 client.on("message",async message => {
 if(message.content === '=shop'){//الامر
 let staff = message.guild.member(message.author).roles.find('name' ,"Sellers");
