@@ -1121,31 +1121,6 @@ let embed = new Discord.RichEmbed()
 
 
 
-if(message.content.startsWith(prefix + "private")){ //يقفل الشاتات
-        message.guild.channels.forEach(c=>{
-            let role = message.guild.roles.find(r => r.name === "@everyone");
-            c.overwritePermissions(role, {
-                READ_MESSAGES: false
-            });
-        })
-    }
-    if(message.content.startsWith(prefix + "openall")){ //يفتح الشاتات
-        //الفلتر الموجود يمديك تضيف فيه اسامي الشاتات الي م تبيها تنفتح
-        //او تغير !==
-        //ل ===
-        //وبيصير يفتح الشاتات الي حددتها
-        //كل م تبي تضيف شات تسوي
-        // && c.name !== "اسم الشات"
-        message.guild.channels.filter(c => c.name !== "اسم رقم 1" && c.name !== "اسم رقم 2 يمديك تزيد لو تبي").forEach(c=>{
-            let role = message.guild.roles.find(r => r.name === "@everyone");
-            c.overwritePermissions(role, {
-                READ_MESSAGES: true
-            });
-        })
-    }
-
-
-
 client.on("message", async message => {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
