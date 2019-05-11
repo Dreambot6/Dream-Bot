@@ -361,7 +361,6 @@ function saveChanges() {
 
 
 
-if(!points.json) points.json = {}
 client.on('message', async message => {//Toxic Codes // n3k4a is one
  
  
