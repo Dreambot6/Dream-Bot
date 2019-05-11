@@ -582,17 +582,14 @@ if(credits[message.author.id].daily != moment().format('L')) {
 
 
 
-
-
-
-
-
+ 
 client.on('message', message => {
+           if (!message.channel.guild) return;
+ 
     let room = message.content.split(" ").slice(1);
     let findroom = message.guild.channels.find('name', `${room}`)
-    if(message.content.startsWith(prefix + "setlog")) {
-if (message.author.bot) return;
-        if(!message.channel.guild) return message.reply('**This Command is Just For Servers!**');
+    if(message.content.startsWith(prefix + "setLog")) {
+        if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
         if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
 if(!room) return message.channel.send('Please Type The Channel Name')
 if(!findroom) return message.channel.send('Please Type The Log Channel Name')
@@ -605,7 +602,7 @@ let embed = new Discord.RichEmbed()
 message.channel.sendEmbed(embed)
 log[message.guild.id] = {
 channel: room,
-onoff: 'on'
+onoff: 'On'
 }
 fs.writeFile("./log.json", JSON.stringify(log), (err) => {
 if (err) console.error(err)
@@ -614,9 +611,8 @@ if (err) console.error(err)
          
 client.on('message', message => {
  
-    if(message.content.startsWith(prefix + "logtoggle")) {
-if (message.author.bot) return;
-        if(!message.channel.guild) return message.reply('**This Command is Just For Servers!**');
+    if(message.content.startsWith(prefix + "toggleLog")) {
+        if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
         if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
         if(!log[message.guild.id]) log[message.guild.id] = {
           onoff: 'Off'
@@ -788,7 +784,6 @@ client.on('roleUpdate', (oldRole, newRole) => {
     })
 });
  
- 
 client.on('channelCreate', channel => {
  
     if(!channel.guild) return;
@@ -916,10 +911,10 @@ client.on('guildBanAdd', (guild, user) => {
  
     if(!guild.member(client.user).hasPermission('EMBED_LINKS')) return;
     if(!guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
-            if(!log[guild.guild.id]) log[guild.guild.id] = {
+            if(!log[user.guild.id]) log[guild.guild.id] = {
           onoff: 'Off'
         }
-    if(log[guild.guild.id].onoff === 'Off') return;
+    if(log[user.guild.id].onoff === 'Off') return;
     var logChannel = guild.channels.find(c => c.name === `${log[guild.guild.id].channel}`);
     if(!logChannel) return;
  
@@ -967,89 +962,7 @@ client.on('guildBanRemove', (guild, user) => {
         logChannel.send(unBanInfo);
     })
 });
-client.on('guildUpdate', (oldGuild, newGuild) => {
  
-    if(!oldGuild.member(client.user).hasPermission('EMBED_LINKS')) return;
-    if(!oldGuild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
-                if(!log[oldGuild.guild.id]) log[oldGuild.guild.id] = {
-          onoff: 'Off'
-        }
-    if(log[oldGuild.guild.id].onoff === 'Off') return;
-    var logChannel = oldGuild.channels.find(c => c.name === `${log[oldGuild.guild.id].channel}`);
-    if(!logChannel) return;
- 
-    oldGuild.fetchAuditLogs().then(logs => {
-        var userID = logs.entries.first().executor.id;
-        var userAvatar = logs.entries.first().executor.avatarURL;
- 
-        if(oldGuild.name !== newGuild.name) {
-            let guildName = new Discord.RichEmbed()
-            .setTitle('**[CHANGE GUILD NAME]**')
-            .setThumbnail(userAvatar)
-            .setColor('BLUE')
-            .setDescription(`**\n**:white_check_mark: Successfully \`\`EDITED\`\` The guild name.\n\n**Old Name:** \`\`${oldGuild.name}\`\`\n**New Name:** \`\`${newGuild.name}\`\`\n**By:** <@${userID}> (ID: ${userID})`)
-            .setTimestamp()
-            .setFooter(newGuild.name, oldGuild.iconURL)
- 
-            logChannel.send(guildName)
-        }
-        if(oldGuild.region !== newGuild.region) {
-            if(log[newGuild.regon.guild.id].onoff === 'Off') return;
-            let guildRegion = new Discord.RichEmbed()
-            .setTitle('**[CHANGE GUILD REGION]**')
-            .setThumbnail(userAvatar)
-            .setColor('BLUE')
-            .setDescription(`**\n**:white_check_mark: Successfully \`\`EDITED\`\` The guild region.\n\n**Old Region:** ${oldGuild.region}\n**New Region:** ${newGuild.region}\n**By:** <@${userID}> (ID: ${userID})`)
-            .setTimestamp()
-            .setFooter(oldGuild.name, oldGuild.iconURL)
- 
-            logChannel.send(guildRegion);
-        }
-        if(oldGuild.verificationLevel !== newGuild.verificationLevel) {
-            if(oldGuild.verificationLevel === 0) {
-                var oldVerLvl = 'Very Easy';
-            }else
-            if(oldGuild.verificationLevel === 1) {
-                var oldVerLvl = 'Easy';
-            }else
-            if(oldGuild.verificationLevel === 2) {
-                var oldVerLvl = 'Medium';
-            }else
-            if(oldGuild.verificationLevel === 3) {
-                var oldVerLvl = 'Hard';
-            }else
-            if(oldGuild.verificationLevel === 4) {
-                var oldVerLvl = 'Very Hard';
-            }
- 
-            if(newGuild.verificationLevel === 0) {
-                var newVerLvl = 'Very Easy';
-            }else
-            if(newGuild.verificationLevel === 1) {
-                var newVerLvl = 'Easy';
-            }else
-            if(newGuild.verificationLevel === 2) {
-                var newVerLvl = 'Medium';
-            }else
-            if(newGuild.verificationLevel === 3) {
-                var newVerLvl = 'Hard';
-            }else
-            if(newGuild.verificationLevel === 4) {
-                var newVerLvl = 'Very Hard';
-            }
-            if(log[newGuild.region.guild.id].onoff === 'Off') return;
-            let verLog = new Discord.RichEmbed()
-            .setTitle('**[GUILD VERIFICATION LEVEL CHANGE]**')
-            .setThumbnail(userAvatar)
-            .setColor('BLUE')
-            .setDescription(`**\n**:white_check_mark: Successfully \`\`EDITED\`\` Guild Verification level.\n\n**Old Verification Level:** ${oldVerLvl}\n**New Verification Level:** ${newVerLvl}\n**By:** <@${userID}> (ID: ${userID})`)
-            .setTimestamp()
-            .setFooter(oldGuild.name, oldGuild.iconURL)
- 
-            logChannel.send(verLog);
-        }
-    })
-});
 client.on('guildMemberUpdate', (oldMember, newMember) => {
     if(!oldMember.guild) return;
                 if(!log[oldMember.guild.id]) log[oldMember.guild.id] = {
@@ -1080,7 +993,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
             .setTitle('**[UPDATE MEMBER NICKNAME]**')
             .setThumbnail(userAvatar)
             .setColor('BLUE')
-            .setDescription(`**\n**:spy: Successfully \`\`CHANGE\`\` Member Nickname.\n\n**User:** ${oldMember} (ID: ${oldMember.id})\n**Old Nickname:** ${oldMember.nickname}\n**New Nickname:** ${newNM}\n**By:** <@${userID}> (ID: ${userID})`)
+            .setDescription(`**\n**:spy: Successfully \`\`CHANGE\`\` Member Nickname.\n\n**User:** ${oldMember} (ID: ${oldMember.id})\n**Old Nickname:** ${oldNM}\n**New Nickname:** ${newNM}\n**By:** <@${userID}> (ID: ${userID})`)
             .setTimestamp()
             .setFooter(oldMember.guild.name, oldMember.guild.iconURL)
  
@@ -1230,6 +1143,8 @@ client.on('voiceStateUpdate', (voiceOld, voiceNew) => {
 
 
 
+
+
 client.on('guildMemberAdd', member=> {
     member.addRole(member.guild.roles.find("name","Member"));
     });
@@ -1265,6 +1180,44 @@ client.on('message', message => {
     })
     }
     });
+
+
+
+
+
+lient.on('message', message => {
+    if(message.content == prefix + "usersinfo") {
+    const mkcode = new Discord.RichEmbed()
+    .setColor('RANDOM')
+    .addField(`All Users Count`,`
+    - Users & Bots: ${client.users.size}
+    - Users: ${client.users.filter(m =>!m.bot).size}
+    - Bots: ${client.users.filter(m=>m.bot).size}`, true)
+    .addField(`All Users Status`,`
+    - Online: ${client.users.filter(m=>m.presence.status == 'online').size}
+    - Offline: ${client.users.filter(m=>m.presence.status == 'offline').size}
+    - Dnd: ${client.users.filter(m=>m.presence.status == 'dnd').size}
+    - Idle: ${client.users.filter(m=>m.presence.status == 'idle').size}`, true)
+        message.channel.send(`- <@${client.user.id}> Users Informations\n- Requested by ${message.author}`,{embed: mkcode});
+        }
+});
+//By MK ToxicCodes CopyRights 04/30/2019
+
+
+
+
+client.on("guildCreate", () => {
+    client.user.setActivity(`${prefix}help ${client.guilds.size}: Server ${client.users.size}: User`, {type:'WATCHING'});
+});
+client.on("guildDelete", () => {
+    client.user.setActivity(`${prefix}help ${client.guilds.size}: Server ${client.users.size}: User`, {type:'WATCHING'});
+});
+
+
+
+
+
+
 
 
 client.login(process.env.BOT_TOKEN);
