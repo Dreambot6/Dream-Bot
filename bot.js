@@ -636,7 +636,7 @@ client.on("guildMemberAdd", member => {
 }).catch(console.error)
 })
 	
-	client.on('message', msg => {
+client.on('message', msg => {
   if (msg.content === 'bot') {
     msg.reply('Name: ${client.user.username}
 	Members: ${client.users.size}
