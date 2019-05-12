@@ -626,24 +626,6 @@ let embed = new Discord.RichEmbed()
 
 
 
-
-
-client.on("message", message => {
-  if (message.author.bot) return;
- if(!message.channel.guild)return;
-  if (!profile[message.author.id]) profile[message.author.id] = {
-    tite: 'HypeLC User',
-    rep: 0,
-   reps: 'NOT YET',
-   lastDaily:'Not Collected',
-    level: 0,
-    points: 0,
-    credits: 1,
-  };
-fs.writeFile('./profile.json', JSON.stringify(profile), (err) => {
-if (err) console.error(err);
-})
-});
 client.on("message", (message) => {
   let men = message.mentions.users.first()
   if (message.author.bot) return;
