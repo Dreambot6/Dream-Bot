@@ -1172,69 +1172,105 @@ client.on('message', async message => {
 
 
 
-client.on("message", (message) => {
-  let men = message.mentions.users.first()
 
-  if (message.author.bot) return;
-    if (message.author.id === client.user.id) return;
-	if(!message.channel.guild) return;
-if (message.content.startsWith(prefix + 'credit')) {
-  if(men) {
-    if (!profile[men.id]) profile[men.id] = {
-    lastDaily:'Not Collected',
-    credits: 1,
-  };
-  }
-  if(men) {
-message.channel.send(`** ${men.username}, :credit_card: balance` + " is `" + `${profile[men.id].credits}$` + "`.**")
-} else {
-  message.channel.send(`** ${message.author.username}, your :credit_card: balance` + " is `" + `${profile[message.author.id].credits}$` + "`.**")
-}
-}
-
-if(message.content.startsWith(prefix + "daily")) {
- if(profile[message.author.id].lastDaily != moment().format('day')) {
-    profile[message.author.id].lastDaily = moment().format('day')
-    profile[message.author.id].credits += 300
-     message.channel.send(`**${message.author.username} you collect your \`300\` :dollar: daily pounds**`)
-} else {
-    message.channel.send(`**:stopwatch: | ${message.author.username}, your daily :yen: credits refreshes ${moment().endOf('day').fromNow()}**`)
-}
-  }
-
- let cont = message.content.slice(prefix.length).split(" ");
-let args = cont.slice(1);
-let sender = message.author
-if(message.content.startsWith(prefix + 'trans')) {
-          if (!args[0]) {
-            message.channel.send(`**Usage: ${prefix}trans @someone amount**`);
-         return;
-           }
-        // We should also make sure that args[0] is a number
-        if (isNaN(args[0])) {
-            message.channel.send(`**Usage: ${prefix}trans @someone amount**`);
-            return; // Remember to return if you are sending an error message! So the rest of the code doesn't run.
-             }
-            let defineduser = '';
-            let firstMentioned = message.mentions.users.first();
-            defineduser = (firstMentioned)
-            if (!defineduser) return message.channel.send(`**Usage: ${prefix}trans @someone amount**`);
-            var mentionned = message.mentions.users.first();
-if (!profile[sender.id]) profile[sender.id] = {}
-if (!profile[sender.id].credits) profile[sender.id].credits = 200;
-fs.writeFile('./profile.json', JSON.stringify(profile), (err) => {
-if (err) console.error(err);
-})
-      var mando = message.mentions.users.id;
-      if  (!profile[defineduser.id]) profile[defineduser.id] = {}
-      if (!profile[defineduser.id].credits) profile[defineduser.id].credits = 200;
-      profile[defineduser.id].credits += (+args[0]);
-      profile[sender.id].credits += (-args[0]);
-      let mariam = message.author.username
-message.channel.send(`**:moneybag: | ${message.author.username}, has transferrerd ` + "`" + args[0] + "$` to " + `<@${defineduser.id}>**`)
-}
-
+  const fs = require('fs'); // npm i fs
+const ms = require('ms'); // npm i ms
+const cool = [];
+client.on('message',async message => {
+  if(message.author.bot) return;
+  if(message.channel.type === 'dm') return;
+ 
+  const args = message.content.split(' ');
+  const credits = require('./credits.json');
+  const path = './credits.json';
+  const mention = message.mentions.users.first() || client.users.get(args[1]) || message.author;
+  const mentionn = message.mentions.users.first() || client.users.get(args[1]);
+  const author = message.author.id;
+  const balance = args[2];
+  const daily = Math.floor(Math.random() * 500) + 100 ;
+ 
+  if(!credits[author]) credits[author] = {credits: 50};
+  if(!credits[mention.id]) credits[mention.id] = {credits: 50};
+  fs.writeFile(path, JSON.stringify(credits, null, 5), function(err) {if(err) console.log(err)});
+ 
+ 
+  if(message.content.startsWith(prefix + "credit")) {
+  if(args[0] !== `${prefix}credit` && args[0] !== `${prefix}credits`) return;
+ 
+  if(args[2]) {
+    if(isNaN(args[2])) return message.channel.send('**:heavy_multiplication_x:| هذه الخانة يجب ان تتكون من ارقام وليس احرف.**');
+    if(mention.bot) return message.channel.send(`**:heavy_multiplication_x:| ${message.content.split(' ')[1]} لم يتم العثور على**`);
+    if(mention.id === message.author.id) return message.channel.send('**:heavy_multiplication_x:| لا يمكنك تحويل كردت لنفسك**');
+    if(credits[author].credits < balance) return message.channel.send('**:heavy_multiplication_x:| أنت لا تملك هذا القدر من الكردت**');
+    var one = Math.floor(Math.random() * 9) + 1;
+    var two = Math.floor(Math.random() * 9) + 1;
+    var three = Math.floor(Math.random() * 9) + 1;
+    var four = Math.floor(Math.random() * 9) + 1;
+ 
+    var number = `${one}${two}${three}${four}`;
+   
+    message.channel.send(`**:heavy_dollar_sign:| \`${number}\`, أكتب الرقم للأستمرار :pencil: **`).then(m => {
+      message.channel.awaitMessages(m => m.author.id === message.author.id, {max: 1, time: 10000}).then(c => {
+        if(c.first().content === number) {
+          m.delete();
+          message.channel.send(`**:moneybag: | ${message.author.username}, قام بتحويل \`${balance}\` لـ ${mention}   **`);
+          credits[author].credits += (-balance);
+          credits[mention.id].credits += (+balance);
+          fs.writeFile(path, JSON.stringify(credits, null, 5), function(err) {if(err) console.log(err)});
+        } else if(c.first().content !== number) {
+          m.delete();
+          message.channel.send(`** :money_with_wings: | تم الغاء الإرسال**`);
+        }
       });
+    });
+  }
+  if(!args[2]) {
+    if(mention.bot) return message.channel.send(`**:heavy_multiplication_x:| ${message.content.split(' ')[1]} لم يتم العثور على**`);
+    message.channel.send(`**${mention.username}, your :credit_card: balance is ** **\`\`$${credits[mention.id].credits}\`\`** `);
+  }
+ 
+  }
+  if(message.content.startsWith(prefix + "daily")) {
+    if(cool.includes(message.author.id)) return message.channel.send(`**:heavy_dollar_sign: | \ , يجب عليك انتظار  يوم لأخذ المبلغ مرة اخرى**`);
+    if(mentionn) {
+      var one = Math.floor(Math.random() * 9) + 1;
+      var two = Math.floor(Math.random() * 9) + 1;
+      var three = Math.floor(Math.random() * 9) + 1;
+      var four = Math.floor(Math.random() * 9) + 1;
+ 
+      var number = `${one}${two}${three}${four}`;
+ 
+      message.channel.send(`**:atm: | \`${number}\`, قم بكتابة الرقم للأستمرار**`).then(async m => {
+        message.channel.awaitMessages(msg => msg.author.id === message.author.id, {max: 1, time: 20000, errors: ['time']}).then(collected => {
+          if(collected.first().content === number) {
+            m.delete();
+            collected.first().delete();
+            credits[mentionn.id].credits += (+daily);
+            fs.writeFile(path, JSON.stringify(credits, null, 5), function(err) {if(err) console.log(err)});
+ 
+          message.channel.send(`**:atm: | \`${daily}\`, تم تسليم المبلغ**`);  
+          }
+          if(collected.first().content !== number) {
+            return m.delete();
+          }
+        });
+      });
+    } else if(!mentionn) {
+      credits[author].credits += (+daily);
+      fs.writeFile(path, JSON.stringify(credits, null, 5), function(err) {if(err) console.log(err)});
+ 
+      message.channel.send(`**:atm: | \`${daily}\`, تم اعطائك المبلغ**`);
+    }
+    cool.unshift(message.author.id);
+ 
+    setTimeout(() => {
+      cool.shift(message.author.id);
+      message.author.send("**:atm: | \`Daily\`, يمكنك الحصول على الكردت المجانية الان**").catch();
+    }, ms("1d"));
+  }
+});
+
+
 
 
 
