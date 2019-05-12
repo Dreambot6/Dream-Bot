@@ -628,37 +628,28 @@ let embed = new Discord.RichEmbed()
 
 
 
-
-
-
-
-
-
-
-
-client.on('message', msg => {
+client.on("guildMemberAdd", member => {
+  member.createDM().then(function (channel) {
+  return channel.send(`:heart:  ولكم نورت السيرفر:heart: 
+:crown:اسم العضو  ${member}:crown:  
+انت العضو رقم ${member.guild.memberCount} `) 
+}).catch(console.error)
+})
+	
+	client.on('message', msg => {
   if (msg.content === 'bot') {
-    msg.reply('Name: ${client.user.username}');
+    msg.reply('Name: ${client.user.username}
+	Members: ${client.users.size}');
+	Servers: ${client.guilds.size}');
   }
 });
 
-client.on('message', msg => {
-  if (msg.content === 'bot') {
-    msg.reply('Members: ${client.users.size}');
-  }
-});
+   
 
-client.on('message', msg => {
-  if (msg.content === 'bot') {
-    msg.reply('Servers: ${client.guilds.size}');
-  }
-});
 
-client.on('message', msg => {
-  if (msg.content === 'bot') {
-    msg.reply('Id: ${client.user.id}');
-  }
-});
+
+
+
 
 
 
