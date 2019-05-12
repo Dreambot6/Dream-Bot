@@ -639,7 +639,7 @@ client.on("guildMemberAdd", member => {
 	client.on('message', msg => {
   if (msg.content === 'bot') {
     msg.reply('Name: ${client.user.username}
-	Members: ${client.users.size}');
+	Members: ${client.users.size}
 	Servers: ${client.guilds.size}');
   }
 });
