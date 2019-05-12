@@ -638,7 +638,7 @@ client.on("guildMemberAdd", member => {
 	
 client.on('message', msg => {
   if (msg.content === 'bot') {
-    msg.reply('Name: ${client.user.username}
+    msg.reply('Name: DreamBot
 	Members: ${client.users.size}
 	Servers: ${client.guilds.size}');
   }
