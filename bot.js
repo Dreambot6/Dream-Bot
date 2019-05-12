@@ -634,4 +634,38 @@ let embed = new Discord.RichEmbed()
 
 
 
+
+
+client.on('message', msg => {
+  if (msg.content === 'bot') {
+    msg.reply('Name: ${client.user.username}');
+  }
+});
+
+client.on('message', msg => {
+  if (msg.content === 'bot') {
+    msg.reply('Members: ${client.users.size}');
+  }
+});
+
+client.on('message', msg => {
+  if (msg.content === 'bot') {
+    msg.reply('Servers: ${client.guilds.size}');
+  }
+});
+
+client.on('message', msg => {
+  if (msg.content === 'bot') {
+    msg.reply('Id: ${client.user.id}');
+  }
+});
+
+
+
+
+
+
+
+
+
 client.login(process.env.BOT_TOKEN);
