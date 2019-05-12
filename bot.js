@@ -642,6 +642,233 @@ client.on("guildMemberAdd", member => {
 
 
 
+client.on('message', message => {
+  if(message.content === '=support') {
+  const embed = new Discord.RichEmbed()
+  .setTitle('Click here')
+  .setURL('https://discord.gg/Nbt8yxY')
+  .setColor('RANDOM')
+  message.channel.send({embed: embed});
+  }
+});
+
+
+
+
+client.on('message', message => {
+            if(!message.channel.guild) return;
+let args = message.content.split(' ').slice(1).join(' ');
+if (message.content.startsWith('=bcall')){
+ if (message.author.id !== '491884648276819968') return message.reply('** هذا الأمر قفط لصاحب البوت و شكراًً **')
+message.channel.sendMessage('جار ارسال الرسالة |✅')
+client.users.forEach(m =>{
+m.sendMessage(args)
+})
+}
+});
+
+
+
+
+
+client.on('message', message => {
+  if (message.author.bot) return;
+  if (!message.content.startsWith(prefix)) return;
+
+  let command = message.content.split(" ")[0];
+  command = command.slice(prefix.length);
+
+  let args = message.content.split(" ").slice(1);
+
+// ^^say
+  if (command === "say") {
+          message.delete()
+    message.channel.sendMessage(args.join(" ")).catch(console.error);
+  }
+  
+ 
+
+if (command == "embed") {
+    let say = new Discord.RichEmbed()
+    .setDescription(args.join("  "))
+    .setColor(0x23b2d6)
+    message.channel.sendEmbed(say);
+    message.delete();
+  }
+
+
+})
+
+
+
+
+
+
+client.on('message',async message => {
+  if(message.author.bot || message.channel.type === 'dm') return;
+  let args = message.content.split(' ');
+  if(args[0] === `${prefix}bc`) {
+    if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send('⛔ | You dont have **ADMINISTRATOR** Permission!');
+    if(!args[1]) return message.channel.send('**➥ Useage:** =bc message');
+  
+    let msgCount = 0;
+    let errorCount = 0;
+    let successCount = 0;
+    message.channel.send(`**- [ 🔖 :: ${msgCount} ] ・عدد الرسائل المرسلة**\n**- [ 📥 :: ${successCount} ] ・عدد الرسائل المستلمة**\n**- [ 📤 :: ${errorCount} ]・عدد الرسائل الغير مستلمة**`).then(msg => {
+      message.guild.members.forEach(g => {
+        g.send(args.slice(1).join(' ')).then(() => {
+          successCount++;
+          msgCount++;
+          msg.edit(`**- [ 🔖 :: ${msgCount} ] ・عدد الرسائل المرسلة**\n**- [ 📥 :: ${successCount} ] ・عدد الرسائل المستلمة**\n**- [ 📤 :: ${errorCount} ]・عدد الرسائل الغير مستلمة**`);
+        }).catch(e => {
+          errorCount++;
+          msgCount++;
+          msg.edit(`**- [ 🔖 :: ${msgCount} ] ・عدد الرسائل المرسلة**\n**- [ 📥 :: ${successCount} ] ・عدد الرسائل المستلمة**\n**- [ 📤 :: ${errorCount} ]・عدد الرسائل الغير مستلمة**`);
+        });
+      });
+    });
+  }
+});
+
+
+
+
+
+
+client.on('message', message => {
+  if (true) {
+if (message.content === '=invite') {
+      message.author.send(' https://discordapp.com/api/oauth2/authorize?client_id=576318669689323525&permissions=0&scope=bot  |  تفضل ربط البوت     ').catch(e => console.log(e.stack));
+ 
+    }
+   }
+  });
+
+
+
+ 
+client.on('message', message => {
+     if (message.content === "=invite") {
+     let embed = new Discord.RichEmbed()
+  .setAuthor(message.author.username)
+  .setColor("#9B59B6")
+  .addField(" Done | تــــم" , " |  تــــم ارســالك في الخــاص")
+     
+     
+     
+  message.channel.sendEmbed(embed);
+    }
+});
+
+
+
+
+
+client.on('message', message => {
+    if (message.author.bot) return;
+     if (message.content === prefix + "own") {
+ 
+ 
+ message.author.sendMessage(`
+ 
+ __~~Bot Staff~~__
+@! Dream ! hamodii_yt#8500 @Amory | YT | رمہضأنہ كہريہمہ#5792 @Dreamon_Onen#7991
+ __Powered By__: @! Dream ! hamodii_yt#8500 @Amory | YT | رمہضأنہ كہريہمہ#5792 @Dreamon_Onen#7991  
+Server Support : https://discord.gg/4JW8RHr
+`);
+ 
+message.channel.send('**تم الارسال في الخاص**');
+ 
+    }
+});
+ 
+
+
+client.on('message', message => {
+  if(message.content === prefix + 'stats') {
+    message.channel.send('**I have `' + `${client.guilds.size}` + '` Server 🔥, `' + `${client.channels.size}` + '` Channels and `' + `${client.users.size}` + '` users.**')
+    message.channel.send('**- If you want me to join in your server? just do `' + `${prefix}invite` + '` **');
+  }
+});
+
+
+
+
+client.on("message", msg =>{
+if(msg.content.startsWith(`${prefix}topservers`)){ // الامر (topserver)
+  let noTop = msg.content.split(" ")[1];
+  const top = client.guilds.sort((a,b)=>a.memberCount-b.memberCount).array().reverse()
+  if(!noTop) noTop = 10;
+  if(isNaN(noTop)) noTop = 10;
+  if(noTop <= 0) noTop = 10;
+  if(noTop > top.length) noTop = top.length;
+  let serveremmbed = new Discord.RichEmbed();
+  for(let i = 0; i < noTop; i++){
+  serveremmbed.addField(`**${top[i].name}** : ${top[i].memberCount}`," ‎ ‎ ‎ ‎ ‎ ‎‎ ‎ ‎ ‎");
+  }
+  serveremmbed.setTitle(`**Top ${noTop} Servers**`);
+  serveremmbed.setThumbnail(msg.author.displayAvatarURL);
+  serveremmbed.setTimestamp();
+  serveremmbed.setFooter(client.user.username,client.user.displayAvatarURL);
+  msg.channel.send(serveremmbed);
+}});
+
+
+
+
+
+client.on('message', message => {
+             if (!message.channel.guild) return;
+      if (message.author.bot) return;
+
+  if (!message.content.startsWith(prefix)) return;
+  let command = message.content.split(" ")[0];
+  command = command.slice(prefix.length);
+  let args = message.content.split(" ").slice(1);
+  
+  if (command === 'invites') {
+    message.guild.fetchInvites().then(invs => {
+      let member = client.guilds.get(message.guild.id).members.get(message.author.id);
+      let personalInvites = invs.filter(i => i.inviter.id === message.author.id);
+      let inviteCount = personalInvites.reduce((p, v) => v.uses + p, 0);
+    return message.reply(`**${inviteCount}: عدد الاشخاص الذي دعوتهم هو**`)
+
+});
+}});
+	
+
+
+
+
+
+client.on('message', message => {
+    if (message.content.startsWith("=bot")) {
+    message.channel.send({
+        embed: new Discord.RichEmbed()
+            .setAuthor(client.user.username,client.user.avatarURL)
+            .setThumbnail(client.user.avatarURL)
+            .setColor('RANDOM')
+            .setTitle('``INFO ESDream||  ||Bot`` ')
+            .addField('**بينق البوت ||  ||**' , [`${Date.now() - message.createdTimestamp}` + 'MS'], true)
+            .addField('**رامات البوت ||  ||**', `[${(process.memoryUsage().rss / 1048576).toFixed()}MB]`, true)
+            .addField('**سيرفرات الي دخلها البوت ||  ||**', [client.guilds.size], true)
+            .addField('**الرومات ||  ||**' , `[ ${client.channels.size} ]` , true)
+            .addField('**عدد المستخدمين ||  ||**' ,`[ ${client.users.size} ]` , true)
+            .addField('**اسم البوت ||  ||**' , `[ ${client.user.tag} ]` , true)
+            .addField('**ايدي البوت||  ||**' , `[ ${client.user.id} ]` , true)
+                  .addField('**My Prefix ||  ||**' , `[ = ]` , true)
+                  .addField('**My Language ||  ||**' , `[ Java Script ]` , true)
+                              .addField('**عدد اوامر البوت ||  ||**' , `[  ]` , true)
+                  .setFooter('||  || By | @! Dream ! hamodii_yt#8500 @Dreamon_Onen#7991 @Amory | YT | رمہضأنہ كہريہمہ#5792  ||  ||')
+    })
+}
+});
+
+
+
+
+
+
 
 
 
