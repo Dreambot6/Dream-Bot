@@ -636,15 +636,7 @@ client.on("guildMemberAdd", member => {
 }).catch(console.error)
 })
 	
-client.on('message', msg => {
-  if (msg.content === 'bot') {
-    msg.reply('Name: DreamBot
-	Members: ${client.users.size}
-	Servers: ${client.guilds.size}');
-  }
-});
 
-   
 
 
 
