@@ -1124,54 +1124,6 @@ message.react("❌")
 
 
 
-client.on("message",(message) => {
-    if (message.channel.type !== "text") return;
-    if (!message.content.startsWith(prefix)) return;
-        if(message.content.startsWith(prefix + "temp on")) {
-            if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply("** You Don't Have Permission `Manage channels` To Do This Command");
-            temp[message.guild.id] = {
-                work : true,
-                channel : "Not Yet"
-            };
-            message.guild.createChannel("اضغط لصنع روم مؤقت", 'voice').then(c => {
-                c.setPosition(1);
-                temp[message.guild.id].channel = c.id
-                message.channel.send("** Done.**");
-            });
-        if(message.content.startsWith(prefix + "temp off")) {
-            if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply("** You Don't Have Permission `Manage channels` To Do This Command");
-        message.guild.channels.get(temp[message.guild.id]).delete();
-            temp[message.guild.id] = {
-                work : false,
-                channel : "Not Yet"
-            };
-        message.channel.send("** Done.**");
-    };
-}})
-client.on("voiceStateUpdate", (o,n) => {
-    if (!temp[n.guild.id]) return;
-    if (temp[n.guild.id].work == false) return;
-    if (n.voiceChannelID == temp[n.guild.id].channel) {
-        n.guild.createChannel(n.user.username, 'voice').then(c => {
-            n.setVoiceChannel(c);
-            c.overwritePermissions(n.user.id, {
-                CONNECT:true,
-                SPEAK:true,
-                MANAGE_CHANNEL:true,
-                MUTE_MEMBERS:true,
-                DEAFEN_MEMBERS:true,
-                MOVE_MEMBERS:true,
-                VIEW_CHANNEL:true  
-            });
-        })
-    };
-    if (!o.voiceChannel) return;
-    if (o.voiceChannel.name == o.user.username) {
-        o.voiceChannel.delete();
-    };
-});
-
-
 client.on('message', msg => {
     if(msg.content.startsWith('=invitebot')) {
     if(msg.channel.type === 'dm') return;
@@ -1181,6 +1133,81 @@ if(!user.bot) return msg.reply('\`منشن بوت\`');
 msg.channel.send(`**Bot InviteURL : ** https://discordapp.com/oauth2/authorize?client_id=${user.id}&scope=bot&permissions=384064`)
     }
 });
+
+
+
+
+client.on('message', async message => {
+  if (message.author.bot) return;
+    if(!message.channel.guild) return;
+ let args = message.content.split(' ').slice(1).join(' ');
+  if(message.content.startsWith(prefix + "sug")) {
+  await  message.channel.send(`🔔 **| اكتب اقتراحك **`)
+    message.delete(10000);
+    let filter = m => m.author.id === message.author.id
+      var text = '';
+        let sugsa = message.channel.awaitMessages(filter, { max: 1, time: 60000})
+          .then(co => {
+            text = co.first().content
+              message.channel.send(`✅ **| تم حفظ اقتراحك **`)
+    message.delete(10000);
+            let embed = new Discord.RichEmbed()
+
+       .setColor('RANDOM')
+       .setThumbnail('https://images-ext-2.discordapp.net/external/cfiQPI-jiFWEr1dTyHZeT4l5ZSegPifQZSSOYusKSyo/https/cdn2.iconfinder.com/data/icons/basic-flat-icon-set/128/letter-256.png')
+       .setTitle('')
+       .addField('**» Guild :**', message.guild.name)
+       .addField('**» المرسل :**', message.author.username)
+       .addField('» اقتراحي :', text)
+       .setTimestamp()
+       .setFooter(message.author.username, message.author.avatarURL)
+
+              client.channels.find('name', '≄◉♔『≤suggestions≥』♔◉≄').send({embed})
+       .setFooter(message.author.username, message.author.avatarURL)
+   message.channel.sendMessage({embed});
+              })
+            }
+          })
+
+
+
+
+//help
+client.on("message", message => {
+             
+     if(!message.channel.guild) return;
+
+ if (message.content === ">help") {
+   message.react("✅")
+  const embed = new Discord.RichEmbed()
+      .setColor("RANDOM")
+      .setThumbnail(message.author.avatarURL)
+      .setDescription(`
+**Helping Commands :**
+
+**❖ Admin Help ➾** >help admin
+
+**❖ General Help ➾** >help general
+
+**❖ Games Help ➾** >help games
+
+**❖ Quran Help ➾** >help quran
+
+**❖ Soundboard Help ➾** >help sb
+
+**❖ Music Help ➾** >help Music
+
+**❖ Important Help ➾** >help important
+**.**
+`)
+       .setTimestamp()
+       .setFooter(message.author.username, message.author.avatarURL)
+
+  message.channel.sendMessage({embed});
+
+ }
+});
+
 
 
 
