@@ -774,7 +774,7 @@ client.on('message', message => {
  __~~Bot Staff~~__
 @! Dream ! hamodii_yt#8500 @Amory | YT | رمہضأنہ كہريہمہ#5792 @Dreamon_Onen#7991
  __Powered By__: @! Dream ! hamodii_yt#8500 @Amory | YT | رمہضأنہ كہريہمہ#5792 @Dreamon_Onen#7991  
-Server Support : https://discord.gg/4JW8RHr
+Server Support : https://discord.gg/Nbt8yxY
 `);
  
 message.channel.send('**تم الارسال في الخاص**');
