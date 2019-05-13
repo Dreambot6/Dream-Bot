@@ -7,8 +7,11 @@ const prefix = '='
 
 });
 
+
+
+
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log(`Logged in as ${client.user.tag}!  go to have fun`);
 });
 
 client.on('message', msg => {
