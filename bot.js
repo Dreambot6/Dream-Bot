@@ -21,34 +21,6 @@ client.on('message', msg => {
 });
 
 
-                              
-                                   
-                                   client.on("message", message => {
-                                    var prefix = "=";
-                                 if (message.content === "=help") {
-                                     message.channel.send('');
-                                  const embed = new Discord.RichEmbed() 
-                                      .setColor("RANDOM")
-                                      .setDescription(`
-                                      __**General Commands**__
-                                      **『=vmute / اعطاء ميوت صوتي』
-                                      『=bot / يعرض لك كل معلومات البوت』
-                                      『=ping / سرعه اتصالك』
-                                      『=id /  معلومات عنك』
-                                      『=tax /  ضريبه』
-                                      『=invitebot / لأضافة بوت تمنشنه』
-                                      『=avatar / صورتك او صورة الي تمنشنة』
-                                      『=invite / لدعوة البوت الى سيرفرك』
-                                      『=support / سيرفر الدعم』
-                                      『=sug / ارسال اقتراح 』**
-                                      
-                                      
-                                `)
-                                   message.author.sendEmbed(embed)
-                                    
-                                   }
-                                   }); 
-                                
 
 
 
