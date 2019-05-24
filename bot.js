@@ -22,6 +22,16 @@ client.on('message', msg => {
 
 
 
+client.on("message", message => {
+ if (message.content === `${prefix}help`) {
+  const embed = new Discord.RichEmbed() 
+      .setColor("#000000")
+      .setDescription(`*SOON*
+      *Soon`)
+   message.channel.sendEmbed(embed)
+   }
+   });
+
 
 
 ﻿﻿client.on("message", message => {
