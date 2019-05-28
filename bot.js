@@ -787,8 +787,8 @@ client.on('message', message => {
  message.author.sendMessage(`
  
  __~~Bot Staff~~__
-@! Dream ! hamodii_yt#8500  @!̤ D̲͙ͅrea͊ͣ̿m ̨! ON#7991 
- __Powered By__: @! Dream ! hamodii_yt#8500  @!̤ D̲͙ͅrea͊ͣ̿m ̨! ON#7991  
+@! Dream ! hamodii_yt#8500   
+ __Powered By__: @! Dream ! hamodii_yt#8500  
 Server Support : https://discord.gg/Nbt8yxY
 `);
  
