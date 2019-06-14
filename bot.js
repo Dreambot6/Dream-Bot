@@ -1790,26 +1790,6 @@ message.channel.send(embed)
 
 
 
-
-client.on('message', msg =>{
-    var prefix = config.prefix
-     if(msg.content.startsWith(prefix + "vip")){
-         let embed = new Discord.RichEmbed()
-         .setColor('RANDOM')
-         .setTitle('Your Premium Info')
-        .SetDescripton('DreamBot **SOON**',`
-ــــــــــــــــــــــــــــــــــ
-Purchased By  : ${pom}
-Date of purchase : ${dop}
-Subscription expiration date : ${sed}
-ــــــــــــــــــــــــــــــــــ
-**`) //Toxic Codes // n3k4a is one 
-        .setFooter(`${client.user.tag}`)
-    msg.channel.sendEmbed(embed); //Toxic Codes // n3k4a is one 
-     }
-})
-
-
   
 
 
