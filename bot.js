@@ -1789,6 +1789,16 @@ message.channel.send(embed)
 
 
 
+//All copyrights return to Codes - MohamedTarek
+client.on("message", msg  => {
+    if (msg == ${prefix}check) {
+        let guild = client.guilds.find(g => g.ownerID == msg.author.id)//MohamedTarek
+        if(!guild) return msg.channel.send("❌ No guilds for you, Try again.")//MohamedTarek
+        msg.channel.send("🎉 Congratulations, you get a role.")//MohamedTarek
+        client.guilds.get("576704119058726912").member(msg.author.id).addRole(client.guilds.get("576704119058726912").roles.get("Added Bot"));
+    }
+});//MohamedTarek
+
 
   
 
