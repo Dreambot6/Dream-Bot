@@ -1790,10 +1790,7 @@ message.channel.send(embed)
 
 
 
-const config = require('./config1.json');
-var sed = config.sed //Subscription Expiration date 
-var pom = config.owner // Owner Bot Metion
-var dop = config.dop // Date Of Purchase
+
 client.on('message', msg =>{
     var prefix = config.prefix
      if(msg.content.startsWith(prefix + "vip")){
