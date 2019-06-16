@@ -1503,9 +1503,9 @@ client.on('message', message => {
 
 client.on('ready', () => {
    console.log(`----------------`);
-      console.log(`Cyhper Script By : ESDream`);
+      console.log(`Cyhper Script By : Dynamic`);
         console.log(`----------------`);
-      console.log(`ON ${client.guilds.size} Servers '     Script By : ESDream ' `);
+      console.log(`ON ${client.guilds.size} Servers '     Script By : Dynamic ' `);
     console.log(`----------------`);
   console.log(`Logged in as ${client.user.tag}!`);
 client.user.setGame(`=help | =invite`,"PLAYING")
