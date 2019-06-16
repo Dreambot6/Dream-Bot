@@ -1945,6 +1945,24 @@ ${thisMessage}\`\`\`
 
   
 
+﻿﻿client.on("message", message => {
+if(message.content.startsWith(prefix + "avatar")){
+if(message.author.bot || message.channel.type == "dm") return;
+var args = message.content.split(" ")[1];
+var avt = args || message.author.id;
+client.fetchUser(avt)
+.then((user) => {
+avt = user
+let avtEmbed = new Discord.RichEmbed()
+.setColor("#36393e")
+.setAuthor(`${avt.username}'s Avatar`, message.author.avatarURL)
+.setImage(avt.avatarURL)
+.setFooter(`PrimeBot.`, message.client.user.avatarURL);
+message.channel.send(avtEmbed);
+})
+.catch(() => message.channel.send(`Error`));
+} // Julian
+}); // Codes - Toxic Codes
 
 
 
