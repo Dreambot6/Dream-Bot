@@ -1733,7 +1733,7 @@ client.on('message', message => {
             .setAuthor(client.user.username,client.user.avatarURL)
             .setThumbnail(client.user.avatarURL)
             .setColor('RANDOM')
-            .setTitle('``INFO ESDream||  ||Bot`` ')
+            .setTitle('``INFO Dynamic||  ||Bot`` ')
             .addField('**بينق البوت ||  ||**' , [`${Date.now() - message.createdTimestamp}` + 'MS'], true)
             .addField('**رامات البوت ||  ||**', `[${(process.memoryUsage().rss / 1048576).toFixed()}MB]`, true)
             .addField('**سيرفرات الي دخلها البوت ||  ||**', [client.guilds.size], true)
