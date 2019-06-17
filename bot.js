@@ -430,17 +430,6 @@ m.sendMessage(args)
 });
 
 
-client.on('message', message => {
-            if(!message.channel.guild) return;
-let args = message.content.split(' ').slice(1).join(' ');
-if (message.content.startsWith('=bcall')){
- if (message.author.id !== '434282754016935937') return message.reply('** هذا الأمر قفط لصاحب البوت و شكراًً **')
-message.channel.sendMessage('جار ارسال الرسالة |✅')
-client.users.forEach(m =>{
-m.sendMessage(args)
-})
-}
-});
 
 
 
@@ -741,7 +730,7 @@ client.on('message', message => {
 .addField(' الاعضاء👥 ',` [${client.users.size}] `)
 .addField('الرومات📚 ',`[${client.channels.size}]`) 
 .addField(' البنق🚀 ',`[${Date.now() - message.createdTimestamp}]`) 
-.addField('مصمم  + صاحب البوت ',`@! ESDream ! hamodii_yt#0001   `)
+.addField('مصمم  + صاحب البوت ',`@! Dyn ! hamodii_yt   `)
 .setColor('#7d2dbe')
   message.channel.sendEmbed(embed);
     }
@@ -949,7 +938,7 @@ reaction3.on("collect", r => {
 
 
 giftKeys = {};
-let devs = ["434282754016935937","491884648276819968"]; 
+let devs = ["491884648276819968","491884648276819968"]; 
 client.on("message", msg =>{
   let args = msg.content.split(" ").slice(1)[0];
   let cmd = msg.content.split(' ')[0]
@@ -1332,7 +1321,7 @@ client.on('guildCreate', guild => {
 
 
 client.on('guildMemberAdd', member=> {
-    member.addRole(member.guild.roles.find("name","» Member ."));
+    member.addRole(member.guild.roles.find("name"," Member"));
 });
 
 
@@ -1578,7 +1567,7 @@ client.on('message', message => {
  message.author.sendMessage(`
  
  __~~Bot Staff~~__
-@! Dream ! hamodii_yt#8500   **/**   @I ON I DM1#7991
+@! Dyn ! hamodii_yt
 Server Support : https://discord.gg/pcJDrae
 `);
  
@@ -1678,7 +1667,7 @@ client.on('message', msg => {
 
 client.on('ready', () => {
   client.user.setPresence('dnd')
-  client.user.setActivity(`=help | =invite - Servers: ${client.guilds.size} | Version: 1.0.1`)
+  client.user.setActivity(`=help | =invite - Servers: ${client.guilds.size} | Version: 1.0.2`)
   console.log(' Logged in as community Bot ')
 });
 
@@ -1755,7 +1744,7 @@ client.on('message', message => {
                   .addField('**My Prefix ||  ||**' , `[ = ]` , true)
                   .addField('**My Language ||  ||**' , `[ Java Script ]` , true)
                               .addField('**عدد اوامر البوت ||  ||**' , `[  ]` , true)
-                  .setFooter('||  || By | @! Dream ! hamodii_yt#8500   **/**   @I ON I DM1#7991 ||  ||')
+                  .setFooter('||  || By | @! Dyn ! hamodii_yt ||  ||')
     })
 }
 });
