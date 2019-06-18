@@ -1410,7 +1410,7 @@ Server owner: __${guild.owner}__
 Members Count: __${guild.memberCount}__
 Servers Counter : __${client.guilds.size}__**`)
          .setColor("#f3ae10")
-         .setFooter('ESDream Bot' , client.user.avatarURL)
+         .setFooter('Dynamic Bot' , client.user.avatarURL)
            client.channels.get("589076800949321741").send({embed});
 }
  
